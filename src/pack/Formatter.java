@@ -25,13 +25,27 @@ public class Formatter {
 
                 }
             }
+                                            //MAIN CYCLE:
             for (int i = 0, j = 1; i < (int) file.length(); i++) {
                 if (j > count)
                     break;
                 else {
+
                     if (buff[i] == ';') {
                         sb.insert(i + j, '\n');
                         j++;
+                        count++;
+                    }
+                    if(buff[i]=='{'){
+                        sb.insert(i + j, '\n');
+                        sb.insert(i+j+1, "    ");
+                        j+=5;
+                        count+=5;
+                    }
+                    if(buff[i]=='}'){
+                        sb.insert(i + j, '\n');
+                        j++;
+                        count++;
                     }
                 }
             }
