@@ -1,6 +1,8 @@
 package pack;
 
 
+import com.sun.xml.internal.fastinfoset.util.CharArray;
+
 import java.io.*;
 
 /**
@@ -11,31 +13,42 @@ public class Formatter {
         File file = new File(path+filename);
         StringBuilder sb = new StringBuilder((int)file.length());
 
-        try(FileReader reader = new FileReader(file))
-        {
-            char[] buff = new char[(int)file.length()];
-            int index;
+        try(FileReader reader = new FileReader(file)) {
+            char[] buff = new char[(int) file.length()];
             reader.read(buff);
             sb.append(buff);
-            for (int i = 0; i <(int)file.length(); i++) {
-                if (buff[i]==';') {
-                    index = (int)buff[i]; //mb w/o int
-                    sb.insert(index, '\n');
+            int count = 0;
+
+            for (int i = 0; i < (int) file.length(); i++) {
+                if (buff[i] == ';') {
+                    count++;
+
+                }
+            }
+            for (int i = 0, j = 1; i < (int) file.length(); i++) {
+                if (j > count)
+                    break;
+                else {
+                    if (buff[i] == ';') {
+                        sb.insert(i + j, '\n');
+                        j++;
+                    }
                 }
             }
 
-        } catch (IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
-        try(FileWriter writer = new FileWriter(path+"formatted_text.txt", false))
-        {
-
-            writer.write(String.valueOf(sb));
-            writer.flush();
-            writer.close();
-        }
-        catch(IOException ex){
-        }
+        System.out.println(String.valueOf(sb));
+//        try(FileWriter writer = new FileWriter(path+"formatted_text.txt", false))
+//        {
+//
+//            writer.write(String.valueOf(sb));
+//            writer.flush();
+//            writer.close();
+//        }
+//        catch(IOException ex){
+//        }
 
     }
 }
