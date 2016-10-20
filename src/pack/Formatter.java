@@ -10,6 +10,7 @@ import java.io.*;
  */
 public class Formatter {
     public static void format(String path, String filename){
+        String[] keywords = {"for","if","switch","while","[]"};
         File file = new File(path+filename);
         StringBuilder sb = new StringBuilder((int)file.length());
 
@@ -46,6 +47,9 @@ public class Formatter {
                         count++;
                     }
                     if(buff[i]=='{'){
+                        if(buff[i-1]==']'){
+                            continue;
+                        }
                         tabs++;
                         sb.insert(i+1, '\n');
                         for(int k=0; k < tabs; k++) {
@@ -58,6 +62,9 @@ public class Formatter {
 
                     }
                     if(buff[i]=='}'){
+                        if(buff[i+1]==';'){
+                            continue;
+                        }
                         tabs--;
                         sb.insert(i + 1, '\n');
                         for(int k=0; k < tabs; k++) {
