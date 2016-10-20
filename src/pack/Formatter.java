@@ -18,6 +18,7 @@ public class Formatter {
             reader.read(buff);
             sb.append(buff);
             int count = 0;
+            int tabs=0;
 
             for (int i = 0; i < (int) file.length(); i++) {
                 if (buff[i] == ';') {
@@ -32,20 +33,41 @@ public class Formatter {
                 else {
 
                     if (buff[i] == ';') {
-                        sb.insert(i + j, '\n');
+                        //sb.insert(i + j, '\n');
+                        sb.insert(i+1, '\n');
+                        for(int k=0; k < tabs; k++) {
+                            sb.insert(i + 2, "    ");
+                        }
+                        String s = String.valueOf(sb);
+                        buff = s.toCharArray();
+
+
                         j++;
                         count++;
                     }
                     if(buff[i]=='{'){
-                        sb.insert(i + j, '\n');
-                        sb.insert(i+j+1, "    ");
+                        tabs++;
+                        sb.insert(i+1, '\n');
+                        for(int k=0; k < tabs; k++) {
+                            sb.insert(i + 2, "    ");
+                        }
+                        String s = String.valueOf(sb);
+                        buff = s.toCharArray();
                         j+=5;
                         count+=5;
+
                     }
                     if(buff[i]=='}'){
-                        sb.insert(i + j, '\n');
+                        tabs--;
+                        sb.insert(i + 1, '\n');
+                        for(int k=0; k < tabs; k++) {
+                            sb.insert(i + 2, "    ");
+                        }
+                        String s = String.valueOf(sb);
+                        buff = s.toCharArray();
                         j++;
                         count++;
+
                     }
                 }
             }
