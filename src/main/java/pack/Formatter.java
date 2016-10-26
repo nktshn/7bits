@@ -8,46 +8,31 @@ import java.io.*;
 
 public class Formatter {
     public static void format(String path, String filename){            //method receiving path and name of text file
-        //String[] keywords = {"for","if","switch","while","[]"};
         File file = new File(path+filename);
         StringBuilder sb = new StringBuilder((int)file.length());
 
         try(FileReader reader = new FileReader(file)) {
             char[] buff = new char[(int) file.length()];                //char array for working with cycles
             reader.read(buff);                                          //sending text from file to char array
-            sb.append(buff);                                            //adding text from char array to stringbulider
+            sb.append(buff);                                            //adding text from char array to string builder
             int count = 0;                                              //simple counter of ';'
             int tabs=0;                                                 //counter of current paragraphs
 
-            for (int i = 0; i < (int) file.length(); i++) {             //counting ';' symbols
+            for (int i = 0; i < sb.length(); i++) {             //counting ';' symbols
                 if (buff[i] == ';') {
                     count++;
                 }
             }
                                             //MAIN CYCLE:
-            for (int i = 0, j = 1; i < sb.length()-count; i++) {
+            for (int i = 0, j = 1; i < buff.length; i++) {
                 if (j > count)                                          //second limiter of cycle
                     break;
                 else {
-//                    int currentspaces = (tabs*4);
                     if (buff[i] == ';') {
                         sb.insert(i+1, '\n');
                         for(int k = 0; k < tabs; k++) {
                             sb.insert(i + 2, "    ");                   //inserting paragraphs to each new lines
                         }
-//                        if (buff[i+currentspaces]=='f' && buff[i+currentspaces+1]=='o' && buff[i+currentspaces+2]=='r'){
-//                            int breakcounter=0;
-//                           for(; buff[i]!=')'; i++) {
-//
-//                               if (buff[i] == ';'){
-//                                   breakcounter++;
-//                                   if (breakcounter==2){
-//                                       break;
-//                                   }
-//                               }
-//
-//                           }
-//                        }
                         String s = String.valueOf(sb);                      //overwriting our char array
                         buff = s.toCharArray();                             //
                         j++;
@@ -88,15 +73,5 @@ public class Formatter {
             e.printStackTrace();
         }
         System.out.println(String.valueOf(sb));
-//        try(FileWriter writer = new FileWriter(path+"formatted_text.txt", false))
-//        {
-//
-//            writer.write(String.valueOf(sb));
-//            writer.flush();
-//            writer.close();
-//        }
-//        catch(IOException ex){
-//        }
-
     }
 }

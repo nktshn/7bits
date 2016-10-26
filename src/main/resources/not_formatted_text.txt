@@ -1,0 +1,1 @@
+﻿package com.company;import java.util.Arrays;public class Main {public static void main(String[] args) {System.out.println("Zdarova");writer();}public static void writer(){int a[] = new int[]{1, 2, 3, 4};int k=a[i];a[i]=a[a.length-i];a[a.length-i]=k;}System.out.println(Arrays.toString(a));}
