@@ -8,18 +8,24 @@ import java.io.IOException;
  * Class for formatting some code.
  */
 
-public final class Formatter {
+  final class Formatter {
+    /**.
+     * constructor
+     */
+    private Formatter() {
+
+    }
     /**
      * formatting method.
      * @param path receiving path to a file, ignored;
      * @param filename receiving name of file;
      */
 
-    public static void format(final String path,
+       static void format(final String path,
                               final String filename) { //method receiving
         File file = new File(path + filename);  //path and name of text file
         StringBuilder sb = new StringBuilder((int) file.length());
-
+          final int five = 5;
         try (FileReader reader = new FileReader(file)) {
             char[] buff;
             buff = new char[(int) file.length()]; //char array
@@ -63,8 +69,8 @@ public final class Formatter {
                         }
                         String s = String.valueOf(sb);
                         buff = s.toCharArray();
-                        j += 5;
-                        count += 5;
+                        j += five;
+                        count += five;
                     }
                     if (buff[i] == '}') {
                         if (buff[i + 1] == ';') { //protection of initialized

@@ -1,11 +1,17 @@
 package pack;
 /**.
- * Main class.
+ * Main class
  */
 
-public class Main {
+public final class Main {
+    /**.
+     * constructor
+     */
+    private Main() {
+
+    }
     /**
-     * formatting method.
+     * main method.
      * @param args command line args, ignored;
      */
 
