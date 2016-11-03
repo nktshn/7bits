@@ -16,6 +16,8 @@ public final class Main {
      */
 
     public static void main(final String[] args) {
-        Formatter.format("src/main/resources/", "not_formatted_text.txt");
+        Formatter f = new Formatter();
+        f.format("src/main/resources/", "not_formatted_text.txt");
+
     }
 }

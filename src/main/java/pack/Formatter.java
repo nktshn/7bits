@@ -8,21 +8,22 @@ import java.io.IOException;
  * Class for formatting some code.
  */
 
-  final class Formatter {
+    public final class Formatter implements Formattable {
     /**.
      * constructor
      */
-    private Formatter() {
+    public Formatter() {
 
     }
+    public String result;
     /**
      * formatting method.
      * @param path receiving path to a file, ignored;
      * @param filename receiving name of file;
      */
 
-       static void format(final String path,
-                              final String filename) { //method receiving
+       public void format(final String path,
+                          final String filename) { //method receiving
         File file = new File(path + filename);  //path and name of text file
         StringBuilder sb = new StringBuilder((int) file.length());
           final int five = 5;
@@ -41,7 +42,7 @@ import java.io.IOException;
                 }
             }
                                             //MAIN CYCLE:
-            for (int i = 0, j = 1; i < buff.length; i++) {
+            for (int i = 0, j = 0; i < buff.length; i++) {
                 if (j > count) {   //second limiter of cycle
                     break;
                 } else {
@@ -88,11 +89,13 @@ import java.io.IOException;
                         count++;
                     }
                 }
-            }
 
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        result = String.valueOf(sb);
         System.out.println(String.valueOf(sb));
     }
 }
