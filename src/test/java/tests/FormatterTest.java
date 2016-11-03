@@ -15,11 +15,11 @@ public class FormatterTest {;
     private Formatter form;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         form = new Formatter();
     }
     @Test
-    public void testFormat(){
+    public void testFormat() {
         form.format("src/main/resources/", "not_formatted_text.txt");
          String control = "\uFEFFpackage com.company;\n" +
                  "import java.util.Arrays;\n" +
@@ -36,8 +36,6 @@ public class FormatterTest {;
                  "        }\n" +
                  "    System.out.println(Arrays.toString(a));\n" +
                  "    }\n\n";
-
-//        control.equals(form.result);
         Assert.assertEquals(control, form.result);
     }
 
