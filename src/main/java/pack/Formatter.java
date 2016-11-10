@@ -21,12 +21,48 @@ package pack;
      * @param sb  - string
      *
      */
-       public void format(char[] buff, final StringBuilder sb) throws FormatterException { //method receiving
-          final int five = 5;
+       public void format(char[] buff, final StringBuilder sb) throws FormatterException {
                try {
                    int tabs = 0;   //counter of current paragraphs
                                 //MAIN CYCLE:
                    for (int i = 0; i < buff.length; i++) {
+                           if (buff[i] == '"') {    //for ignoring symbols in strings
+                               i++;
+                               while (buff[i] != '"') {
+                                   i++;
+                               }
+                           }
+                           if (buff[i] == '/' && buff[i + 1] == '*') {    //for multiline comments
+                               i += 2;
+                               while (buff[i] != '*') {
+                                   i++;
+                               }
+                               for (int k = 0; k < tabs; k++) {
+                                   sb.insert(i + 3, "    "); //inserting paragraphs
+                               }
+                               String s = String.valueOf(sb);
+                               buff = s.toCharArray();
+                           }
+                           if (buff[i] == '/' && buff[i + 1] == '/') { //for line comments
+
+                              while (buff[i - 1] != ';') {
+                                  i--;
+                                  sb.deleteCharAt(i);
+                              }
+                               String s = String.valueOf(sb);
+                               buff = s.toCharArray();
+                           }
+                           if (buff[i] == '/' && buff[i + 1] == '/') { //for line comments
+                               i += 2;
+                               while (buff[i] != '\n') {
+                                   i++;
+                               }
+                               for (int k = 0; k < tabs; k++) {
+                                   sb.insert(i + 1 , "    "); //inserting paragraphs
+                               }
+                               String s = String.valueOf(sb);
+                               buff = s.toCharArray();
+                           }
                            if (buff[i] == ';') {
                                sb.insert(i + 1, '\n');
                                for (int k = 0; k < tabs; k++) {
@@ -39,7 +75,7 @@ package pack;
                            }
                            if (buff[i] == '{') {
                                if (buff[i - 1] == ']') {      //protection of
-                                   // initialized arrays
+                                                    // initialized arrays
                                    continue;
                                }
                                tabs++;
@@ -51,7 +87,7 @@ package pack;
                                buff = s.toCharArray();
                            }
                            if (buff[i] == '}') {
-                               if (buff[i + 1] == ';') { //protection of initialized
+                               if (buff[i + 1] == ';') {  //protection of initialized
                                    // arrays
                                    continue;
                                }
