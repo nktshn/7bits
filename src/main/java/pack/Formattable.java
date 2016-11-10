@@ -3,11 +3,13 @@ package pack;
 /**.
  * Interface for formatting.
  */
-    public interface Formattable {
+     interface Formattable {
     /**.
      * Method to format.
-     * @param path receiving path to a file, ignored;
-     * @param filename receiving name of file;
+     * @param buff - char array
+     * @param sb  - string
      */
-     void format(String path, String filename);
-    }
+      void format(char[] buff, StringBuilder sb)
+              throws FormatterException;
+
+}

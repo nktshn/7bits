@@ -15,9 +15,16 @@ public final class Main {
      * @param args command line args, ignored;
      */
 
-    public static void main(final String[] args) {
-        Formatter f = new Formatter();
-        f.format("src/main/resources/", "not_formatted_text.txt");
-
+    public static void main(final String[] args) throws Exception {
+        try {
+            Reader rd = new Reader();
+            rd.read("src/main/resources/", "not_formatted_text.txt");
+            Formatter f = new Formatter();
+            f.format(rd.buff, rd.sb);
+            Writer writer = new Writer();
+            writer.write(f.result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

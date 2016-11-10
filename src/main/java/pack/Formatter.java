@@ -1,9 +1,5 @@
 package pack;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
 /**
  * Class for formatting some code.
  */
@@ -15,87 +11,82 @@ import java.io.IOException;
     public Formatter() {
 
     }
-    public String result;
+    /**.
+     * result string
+     */
+    public StringBuilder result;
     /**
      * formatting method.
-     * @param path receiving path to a file, ignored;
-     * @param filename receiving name of file;
+     * @param buff - char array
+     * @param sb  - string
+     *
      */
 
-       public void format(final String path,
-                          final String filename) { //method receiving
-        File file = new File(path + filename);  //path and name of text file
-        StringBuilder sb = new StringBuilder((int) file.length());
+       public void format(char[] buff, final StringBuilder sb) throws FormatterException { //method receiving
           final int five = 5;
-        try (FileReader reader = new FileReader(file)) {
-            char[] buff;
-            buff = new char[(int) file.length()]; //char array
-                                                  //for working with cycles
-            reader.read(buff); //sending text from file to char array
-            sb.append(buff); //adding text from char array to string builder
-            int count = 0;  //simple counter of ';'
-            int tabs = 0;   //counter of current paragraphs
 
-            for (int i = 0; i < sb.length(); i++) {  //counting ';' symbols
-                if (buff[i] == ';') {
-                    count++;
-                }
-            }
-                                            //MAIN CYCLE:
-            for (int i = 0, j = 0; i < buff.length; i++) {
-                if (j > count) {   //second limiter of cycle
-                    break;
-                } else {
-                    if (buff[i] == ';') {
-                        sb.insert(i + 1, '\n');
-                        for (int k = 0; k < tabs; k++) {
-                            sb.insert(i + 2, "    "); //inserting paragraphs
-                                                      // to each new lines
-                        }
-                        String s = String.valueOf(sb); //overwriting our
-                                                       // char array
-                        buff = s.toCharArray();        //
-                        j++;
-                        count++;
-                    }
-                    if (buff[i] == '{') {
-                        if (buff[i - 1] == ']') {      //protection of
-                                                       // initialized arrays
-                            continue;
-                        }
-                        tabs++;
-                        sb.insert(i + 1, '\n');
-                        for (int k = 0; k < tabs; k++) {
-                            sb.insert(i + 2, "    ");
-                        }
-                        String s = String.valueOf(sb);
-                        buff = s.toCharArray();
-                        j += five;
-                        count += five;
-                    }
-                    if (buff[i] == '}') {
-                        if (buff[i + 1] == ';') { //protection of initialized
-                                                  // arrays
-                            continue;
-                        }
-                        tabs--;
-                        sb.insert(i + 1, '\n');
-                        for (int k = 0; k < tabs; k++) {
-                            sb.insert(i + 2, "    ");
-                        }
-                        String s = String.valueOf(sb);
-                        buff = s.toCharArray();
-                        j++;
-                        count++;
-                    }
-                }
+               try {
+                   int count = 0;  //simple counter of ';'
+                   int tabs = 0;   //counter of current paragraphs
 
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                   for (int i = 0; i < sb.length(); i++) {  //counting ';' symbols
+                       if (buff[i] == ';') {
+                           count++;
+                       }
+                   }
+                   //MAIN CYCLE:
+                   for (int i = 0, j = 0; i < buff.length; i++) {
+                       if (j > count) {   //second limiter of cycle
+                           break;
+                       } else {
+                           if (buff[i] == ';') {
+                               sb.insert(i + 1, '\n');
+                               for (int k = 0; k < tabs; k++) {
+                                   sb.insert(i + 2, "    "); //inserting paragraphs
+                                   // to each new lines
+                               }
+                               String s = String.valueOf(sb); //overwriting our
+                               // char array
+                               buff = s.toCharArray();        //
+                               j++;
+                               count++;
+                           }
+                           if (buff[i] == '{') {
+                               if (buff[i - 1] == ']') {      //protection of
+                                   // initialized arrays
+                                   continue;
+                               }
+                               tabs++;
+                               sb.insert(i + 1, '\n');
+                               for (int k = 0; k < tabs; k++) {
+                                   sb.insert(i + 2, "    ");
+                               }
+                               String s = String.valueOf(sb);
+                               buff = s.toCharArray();
+                               j += five;
+                               count += five;
+                           }
+                           if (buff[i] == '}') {
+                               if (buff[i + 1] == ';') { //protection of initialized
+                                   // arrays
+                                   continue;
+                               }
+                               tabs--;
+                               sb.insert(i + 1, '\n');
+                               for (int k = 0; k < tabs; k++) {
+                                   sb.insert(i + 2, "    ");
+                               }
+                               String s = String.valueOf(sb);
+                               buff = s.toCharArray();
+                               j++;
+                               count++;
+                           }
+                       }
 
-        result = String.valueOf(sb);
-        System.out.println(String.valueOf(sb));
+                   }
+               } catch (Exception e) {
+                   throw new FormatterException("Formatting failed", e);
+               }
+        result = sb;
     }
 }
